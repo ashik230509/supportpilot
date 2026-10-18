@@ -1,0 +1,170 @@
+{
+ "Bro en order 11 innum varala, refund venum": {
+  "language": "Tanglish",
+  "intent": "refund",
+  "urgency": "medium",
+  "angry": false,
+  "order_id": 11,
+  "english_query": "My order 11 has not arrived yet, and I want a refund."
+ },
+ "Anna order 25 enga irukku? romba late aaguthu": {
+  "language": "Tanglish",
+  "intent": "order_status",
+  "urgency": "medium",
+  "angry": false,
+  "order_id": 25,
+  "english_query": "Where is order 25? It is getting very late."
+ },
+ "order 8 cancel pannunga please": {
+  "language": "Tanglish",
+  "intent": "cancel",
+  "urgency": "low",
+  "angry": false,
+  "order_id": 8,
+  "english_query": "Please cancel order 8."
+ },
+ "Enakku order 14 return panna mudiyuma?": {
+  "language": "Tanglish",
+  "intent": "return",
+  "urgency": "low",
+  "angry": false,
+  "order_id": 14,
+  "english_query": "Can I return order 14?"
+ },
+ "Payment UPI accept pannuveengala?": {
+  "language": "Tanglish",
+  "intent": "general_query",
+  "urgency": "low",
+  "angry": false,
+  "order_id": null,
+  "english_query": "Do you accept UPI for payment?"
+ },
+ "Romba mosamana service, yaarume reply pannala, order 3": {
+  "language": "Tanglish",
+  "intent": "complaint",
+  "urgency": "high",
+  "angry": true,
+  "order_id": 3,
+  "english_query": "Very bad service, no one has replied regarding order 3."
+ },
+ "refund evlo naal aagum?": {
+  "language": "Tanglish",
+  "intent": "refund",
+  "urgency": "low",
+  "angry": false,
+  "order_id": null,
+  "english_query": "How many days will the refund take?"
+ },
+ "Delivery address change pannalama?": {
+  "language": "Tanglish",
+  "intent": "general_query",
+  "urgency": "low",
+  "angry": false,
+  "order_id": null,
+  "english_query": "Can I change the delivery address?"
+ },
+ "order 30 la product damage, return venum": {
+  "language": "Tanglish",
+  "intent": "return",
+  "urgency": "medium",
+  "angry": false,
+  "order_id": 30,
+  "english_query": "The product in order 30 is damaged and I want to return it."
+ },
+ "en order status sollunga, order 42": {
+  "language": "Tanglish",
+  "intent": "order_status",
+  "urgency": "low",
+  "angry": false,
+  "order_id": 42,
+  "english_query": "Please tell me the status of order number 42."
+ },
+ "refund venum": {
+  "language": "Tanglish",
+  "intent": "refund",
+  "urgency": "low",
+  "angry": false,
+  "order_id": null,
+  "english_query": "I want a refund."
+ },
+ "என் ஆர்டர் 8 ரத்து செய்ய வேண்டும்": {
+  "language": "Tamil",
+  "intent": "cancel",
+  "urgency": "low",
+  "angry": false,
+  "order_id": 8,
+  "english_query": "I want to cancel my order 8."
+ },
+ "ஆர்டர் 11 இன்னும் வரவில்லை, பணத்தைத் திருப்பிக் கொடுங்கள்": {
+  "language": "Tamil",
+  "intent": "refund",
+  "urgency": "medium",
+  "angry": false,
+  "order_id": 11,
+  "english_query": "Order 11 has not arrived yet, please refund the money."
+ },
+ "எனது ஆர்டர் 25 எங்கே உள்ளது?": {
+  "language": "Tamil",
+  "intent": "order_status",
+  "urgency": "low",
+  "angry": false,
+  "order_id": 25,
+  "english_query": "Where is my order 25?"
+ },
+ "பொருளை திருப்பி அனுப்ப எத்தனை நாள் அவகாசம்?": {
+  "language": "Tamil",
+  "intent": "return",
+  "urgency": "low",
+  "angry": false,
+  "order_id": null,
+  "english_query": "How many days are allowed to return a product?"
+ },
+ "ஆர்டர் 17 ஐ திருப்பி அனுப்ப வேண்டும்": {
+  "language": "Tamil",
+  "intent": "return",
+  "urgency": "low",
+  "angry": false,
+  "order_id": 17,
+  "english_query": "I want to return order 17."
+ },
+ "இது மிகவும் மோசமான சேவை! யாரும் பதில் சொல்லவில்லை": {
+  "language": "Tamil",
+  "intent": "complaint",
+  "urgency": "high",
+  "angry": true,
+  "order_id": null,
+  "english_query": "This is very bad service! No one is responding."
+ },
+ "என்ன பணம் செலுத்தும் முறைகள் உள்ளன?": {
+  "language": "Tamil",
+  "intent": "general_query",
+  "urgency": "low",
+  "angry": false,
+  "order_id": null,
+  "english_query": "What payment methods are available?"
+ },
+ "Where is my order 25? It was supposed to come last week.": {
+  "language": "English",
+  "intent": "order_status",
+  "urgency": "medium",
+  "angry": false,
+  "order_id": 25,
+  "english_query": "Where is my order 25? It was supposed to arrive last week."
+ },
+ "This is the WORST service!! I want my money back for order 3 NOW": {
+  "language": "English",
+  "intent": "refund",
+  "urgency": "high",
+  "angry": true,
+  "order_id": 3,
+  "english_query": "I demand an immediate refund for order 3 due to the terrible service."
+ },
+ "What payment methods do you accept?": {
+  "language": "English",
+  "intent": "general_query",
+  "urgency": "low",
+  "angry": false,
+  "order_id": null,
+  "english_query": "What payment methods do you accept?"
+ }
+}

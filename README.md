@@ -1,3 +1,9 @@
+---
+title: SupportPilot
+emoji: 🤖
+sdk: docker
+app_port: 7860
+---
 # SupportPilot: Multilingual AI Support Agent for E-commerce
 
 An agentic AI system that reads customer tickets in **English, Tamil and Tanglish**, resolves them using real tools (order status, refund, return, cancel), answers policy questions with RAG, and **escalates risky cases to a human**.

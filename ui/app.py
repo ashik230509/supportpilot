@@ -23,7 +23,11 @@ def resolve(ticket_id, order_id, approve, reply):
 tab1, tab2, tab3 = st.tabs(["New ticket", "Approval queue", "All tickets"])
 
 with tab1:
-    mode = st.radio("Mode", ["Demo (no API)", "Live (uses Gemini)"], horizontal=True)
+
+    import os
+
+    modes = ["Demo (no API)"] + (["Live (uses Gemini)"] if os.getenv("ENABLE_LIVE") == "1" else []) 
+    mode = st.radio("Mode", modes, horizontal=True)
     message = st.text_area("Customer message", "Bro, en order 11 innum varala, refund venum")
     if mode.startswith("Demo"):
         c1, c2, c3, c4 = st.columns(4)

@@ -8,9 +8,17 @@ from app.db import get_conn, init_db
 from app.agents.classifier import Classification
 from app.pipeline import process, handle_ticket
 
+from pathlib import Path
+
 init_db()
-st.set_page_config(page_title="SupportPilot", layout="wide")
-st.title("SupportPilot")
+with get_conn() as conn:
+    has_data = conn.execute("SELECT COUNT(*) FROM orders").fetchone()[0] > 0
+if not has_data:
+    from data.seed_orders import seed
+    seed()
+if not (Path(__file__).resolve().parent.parent / "chroma_db").exists():
+    from app.rag.ingest import ingest
+    ingest()
 
 def resolve(ticket_id, order_id, approve, reply):
     with get_conn() as conn:

@@ -8,7 +8,10 @@ from app.db import get_conn, init_db
 from app.agents.classifier import Classification
 from app.pipeline import process, handle_ticket
 
+import shutil
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
 
 init_db()
 with get_conn() as conn:
@@ -16,9 +19,23 @@ with get_conn() as conn:
 if not has_data:
     from data.seed_orders import seed
     seed()
-if not (Path(__file__).resolve().parent.parent / "chroma_db").exists():
+
+def rag_ready():
+    try:
+        import chromadb
+        c = chromadb.PersistentClient(path=str(ROOT / "chroma_db"))
+        return c.get_collection("policies").count() > 0
+    except Exception:
+        return False
+
+if not rag_ready():
     from app.rag.ingest import ingest
-    ingest()
+    try:
+        ingest()
+    except Exception:
+        # corrupted model download: delete the cache and try once more
+        shutil.rmtree(Path.home() / ".cache" / "chroma", ignore_errors=True)
+        ingest()
 
 def resolve(ticket_id, order_id, approve, reply):
     with get_conn() as conn:

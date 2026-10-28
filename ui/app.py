@@ -1,6 +1,10 @@
+import os
 import sys
+import shutil
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
 import pandas as pd
 import streamlit as st
@@ -8,34 +12,39 @@ from app.db import get_conn, init_db
 from app.agents.classifier import Classification
 from app.pipeline import process, handle_ticket
 
-import shutil
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+@st.cache_resource(show_spinner="Setting up demo data (first load takes about a minute)...")
+def setup():
+    init_db()
+    with get_conn() as conn:
+        has_data = conn.execute("SELECT COUNT(*) FROM orders").fetchone()[0] > 0
+    if not has_data:
+        from data.seed_orders import seed
+        seed()
 
-init_db()
-with get_conn() as conn:
-    has_data = conn.execute("SELECT COUNT(*) FROM orders").fetchone()[0] > 0
-if not has_data:
-    from data.seed_orders import seed
-    seed()
+    def rag_ready():
+        try:
+            import chromadb
+            c = chromadb.PersistentClient(path=str(ROOT / "chroma_db"))
+            return c.get_collection("policies").count() > 0
+        except Exception:
+            return False
 
-def rag_ready():
-    try:
-        import chromadb
-        c = chromadb.PersistentClient(path=str(ROOT / "chroma_db"))
-        return c.get_collection("policies").count() > 0
-    except Exception:
-        return False
+    if not rag_ready():
+        from app.rag.ingest import ingest
+        try:
+            ingest()
+        except Exception:
+            # corrupted model download: delete the cache and try once more
+            shutil.rmtree(Path.home() / ".cache" / "chroma", ignore_errors=True)
+            ingest()
+    return True
 
-if not rag_ready():
-    from app.rag.ingest import ingest
-    try:
-        ingest()
-    except Exception:
-        # corrupted model download: delete the cache and try once more
-        shutil.rmtree(Path.home() / ".cache" / "chroma", ignore_errors=True)
-        ingest()
+
+st.set_page_config(page_title="SupportPilot", layout="wide")
+setup()
+st.title("SupportPilot")
+
 
 def resolve(ticket_id, order_id, approve, reply):
     with get_conn() as conn:
@@ -45,13 +54,11 @@ def resolve(ticket_id, order_id, approve, reply):
             conn.execute("UPDATE refunds SET status=? WHERE order_id=? AND status='pending_human'",
                          ("approved" if approve else "rejected", order_id))
 
+
 tab1, tab2, tab3 = st.tabs(["New ticket", "Approval queue", "All tickets"])
 
 with tab1:
-
-    import os
-
-    modes = ["Demo (no API)"] + (["Live (uses Gemini)"] if os.getenv("ENABLE_LIVE") == "1" else []) 
+    modes = ["Demo (no API)"] + (["Live (uses Gemini)"] if os.getenv("ENABLE_LIVE") == "1" else [])
     mode = st.radio("Mode", modes, horizontal=True)
     message = st.text_area("Customer message", "Bro, en order 11 innum varala, refund venum")
     if mode.startswith("Demo"):
